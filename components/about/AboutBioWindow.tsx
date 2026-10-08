@@ -27,7 +27,7 @@ const AboutBioWindow = ({ bioLines, isInView }: AboutBioWindowProps) => {
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.3, delay: 0.1 * index }}
-              className="font-mono text-sm md:text-base leading-7"
+              className="font-mono text-sm md:text-base leading-7 whitespace-pre-wrap"
             >
               {line.startsWith("//") ? (
                 <span className="text-emerald-400">{line}</span>

@@ -1,87 +1,131 @@
 export const bioLines = [
   "// About Me",
   "",
-  "I’m a performance-driven Frontend Developer with a strong",
-  "full-stack foundation in the T3 stack.",
+  "I'm a junior full-stack developer focused on building practical",
+  "web applications and business systems.",
   "",
-  "I bridge delightful UI/UX with robust backend systems",
-  "to deliver highly performant, end-to-end user experiences.",
+  "My experience includes developing an RFID-based attendance system",
+  "used across company branches and building full-stack applications",
+  "for business and government workflows.",
   "",
-  "Recent work includes modernizing legacy workflows,",
-  "from real-time RFID attendance systems to full-stack",
-  "document logging web apps for government operations.",
+  "I enjoy turning manual processes into software, solving bugs,",
+  "and building systems that people actually use.",
   "",
-  "I enjoy turning complex business requirements into",
-  "scalable, interactive SaaS and B2B solutions.",
+  "I work across:",
   "",
-  "// Core Stack: Next.js, React, TypeScript, Node.js, Supabase, PostgreSQL, Tailwind CSS",
-  "// Debugging still feels like treasure hunting, and I love that part of the craft."
+  "Frontend     → React, Next.js, TypeScript",
+  "Backend      → Node.js, Express, REST APIs",
+  "Database     → PostgreSQL, MySQL, Supabase",
+  "Engineering  → Authentication, RBAC, Database Design, Git",
+  "",
+  "// Currently Building",
+  "",
+  "Sales & Inventory SaaS",
+  "",
+  "A full-stack business application focused on products, inventory,",
+  "sales, branches, reporting, and operational workflows.",
 ];
 
 export const skills = [
   {
     label: "Next.js",
-    description: "I use Next.js to ship fast, SEO-friendly apps, and it helped me structure fullstack features cleanly with App Router.",
+    description:
+      "I use Next.js to build full-stack web applications with the App Router, server-side features, API integrations, and reusable application architecture.",
   },
   {
     label: "TypeScript",
-    description: "TypeScript helped me catch bugs earlier and refactor confidently by keeping my frontend and backend contracts predictable.",
+    description:
+      "I use TypeScript to make application code safer and easier to maintain, especially across components, APIs, database operations, and shared data structures.",
   },
   {
     label: "React",
-    description: "React helped me build reusable UI patterns faster, especially for interactive components and state-heavy pages.",
-  },
-  {
-    label: "React Native",
-    description: "With React Native, I was able to extend ideas to mobile while reusing my React mindset and component design habits.",
-  },
-  {
-    label: "Tailwind CSS",
-    description: "Tailwind CSS helped me move from mockups to production UI quickly while keeping spacing, typography, and layout consistent.",
+    description:
+      "I use React to build reusable interfaces, interactive components, dashboards, forms, and state-driven application experiences.",
   },
   {
     label: "Node.js",
-    description: "Node.js helped me build APIs and backend workflows in the same ecosystem, making end-to-end development faster for me.",
+    description:
+      "I use Node.js to build backend logic, APIs, authentication flows, and server-side features for full-stack applications.",
   },
   {
     label: "PostgreSQL",
-    description: "PostgreSQL helped me design reliable relational schemas and write efficient queries for data-heavy features.",
+    description:
+      "I use PostgreSQL to design relational data models, manage application data, define relationships, and support business workflows.",
   },
   {
-    label: "MongoDB",
-    description: "MongoDB has helped me when projects needed flexible document models and quick iteration on evolving data structures.",
+    label: "Tailwind CSS",
+    description:
+      "I use Tailwind CSS to build responsive interfaces efficiently while maintaining consistent spacing, typography, layouts, and component styling.",
   },
   {
-    label: "Git/GitHub",
-    description: "Git and GitHub helped me collaborate smoothly, track changes clearly, and maintain a clean delivery history across projects.",
+    label: "Supabase",
+    description:
+      "I use Supabase for PostgreSQL databases, authentication, data access, and backend services when building full-stack applications.",
+  },
+  {
+    label: "Express.js",
+    description:
+      "I use Express.js to build REST APIs, backend routes, middleware, authentication flows, and server-side business logic.",
+  },
+  {
+    label: "REST APIs",
+    description:
+      "I design and integrate REST APIs to connect frontend applications with backend services and manage application data and business operations.",
+  },
+  {
+    label: "Authentication & RBAC",
+    description:
+      "I implement authentication and role-based access control to protect application features and ensure users can only access the resources appropriate to their roles.",
+  },
+  {
+    label: "Database Design",
+    description:
+      "I design relational database structures around application requirements, including tables, relationships, constraints, and data flows.",
+  },
+  {
+    label: "MySQL",
+    description:
+      "I have used MySQL to design and manage relational data for web applications, including an RFID attendance system deployed for company operations.",
+  },
+  {
+    label: "React Native",
+    description:
+      "I use React Native to build cross-platform mobile interfaces while applying the same component-based development principles I use with React.",
+  },
+  {
+    label: "Git & GitHub",
+    description:
+      "I use Git and GitHub to manage source code, track changes, work with branches, and maintain development history across projects.",
   },
   {
     label: "Postman",
-    description: "Postman helped me validate endpoints early, which reduced API integration issues before frontend handoff.",
+    description:
+      "I use Postman to test and debug API endpoints, inspect requests and responses, and validate backend behavior during development.",
   },
   {
     label: "Vercel",
-    description: "Vercel helped me deploy and preview frontend updates quickly, making iteration and feedback loops much faster.",
+    description:
+      "I use Vercel to deploy Next.js applications, manage preview deployments, and iterate quickly on production web projects.",
+  },
+  {
+    label: "JavaScript",
+    description:
+      "I use JavaScript for frontend interactions, application logic, API integration, and backend development alongside TypeScript.",
+  },
+  {
+    label: "Responsive Web Design",
+    description:
+      "I build responsive interfaces that adapt to different screen sizes and remain usable across desktop, tablet, and mobile devices.",
+  },
+  {
+    label: "Debugging",
+    description:
+      "I approach debugging by reproducing problems, tracing the underlying cause, testing fixes, and verifying that changes do not introduce new issues.",
   },
   {
     label: "Figma",
-    description: "Figma helped me translate design ideas into build-ready layouts and keep implementation aligned with intended UX.",
-  },
-  {
-    label: "AI Tools",
-    description: "AI tools helped me speed up prototyping, debugging, and solution exploration without sacrificing implementation quality.",
-  },
-  {
-    label: "GitHub Copilot",
-    description: "GitHub Copilot helped me implement features faster, then focus more energy on architecture, testing, and review quality.",
-  },
-  {
-    label: "Antigravity",
-    description: "Antigravity helped me experiment with modern AI-assisted workflows and improve how I approach problem decomposition.",
-  },
-  {
-    label: "Google Stitch",
-    description: "Google Stitch helped me iterate on UI concepts quickly and evaluate visual directions before full implementation.",
+    description:
+      "I use Figma as a reference when translating interface designs and layouts into responsive web implementations.",
   },
 ];
 
