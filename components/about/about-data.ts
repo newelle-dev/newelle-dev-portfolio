@@ -1,7 +1,7 @@
 export const bioLines = [
   "// About Me",
   "",
-  "I'm a junior full-stack developer focused on building practical",
+  "I'm a full-stack developer focused on building practical",
   "web applications and business systems.",
   "",
   "My experience includes developing an RFID-based attendance system",
