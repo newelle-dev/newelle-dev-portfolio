@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import Link from "next/link";
-import ProjectCard from "./ProjectCard";
 import { projects } from "@/lib/projects";
+import ProjectFeatureSection from "./ProjectFeatureSection";
 
 export const ProjectsSection = () => {
   const ref = useRef(null);
@@ -11,39 +10,23 @@ export const ProjectsSection = () => {
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
 
   return (
-    <section id="projects" className="py-24 px-4 bg-secondary/30">
-      <div className="container max-w-6xl mx-auto">
-        <motion.div
+    <section id="projects" className="py-16 px-4 sm:px-6 relative scroll-mt-24">
+      <div id="work" className="absolute -top-24" />
+      <div className="container max-w-4xl mx-auto">
+        <motion.p
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.4 }}
+          className="section-label"
         >
-          <h2 className="font-mono text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-primary">&lt;</span>
-            Projects
-            <span className="text-primary">/&gt;</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of recent work showcasing modern development practices
-            and clean, maintainable code.
-          </p>
-        </motion.div>
+          Work
+        </motion.p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-col gap-14 sm:gap-16">
           {featuredProjects.map((project, index) => (
-            <ProjectCard key={project.title} {...project} index={index} />
+            <ProjectFeatureSection key={project.title} {...project} index={index} />
           ))}
-        </div>
-
-        <div className="mt-10 text-center">
-          <Link
-            href="/projects"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-panel-border bg-panel text-foreground font-mono text-sm hover:border-primary hover:text-primary transition-colors"
-          >
-            See All Projects
-          </Link>
         </div>
       </div>
     </section>

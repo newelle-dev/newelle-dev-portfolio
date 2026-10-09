@@ -1,5 +1,6 @@
 export interface Project {
   title: string;
+  tagline?: string;
   description: string;
   techStack: string[];
   imageUrl: string;
