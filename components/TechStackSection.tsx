@@ -11,9 +11,8 @@ import {
   SiSupabase,
   SiDocker,
   SiGit,
-  SiOpencode,
 } from "react-icons/si";
-import { Terminal, Code2 } from "lucide-react";
+import { Terminal } from "lucide-react";
 import type { IconType } from "react-icons";
 import type { LucideIcon } from "lucide-react";
 
@@ -31,7 +30,7 @@ const techStack: { label: string; Icon: TechIcon }[] = [
   { label: "Claude Code",  Icon: Terminal     },
 ];
 
-export const TechStackSection = () => {
+const TechStackSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 

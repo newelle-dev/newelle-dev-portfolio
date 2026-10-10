@@ -75,7 +75,7 @@ interface TooltipState {
   y: number;
 }
 
-export const GitHubSection = () => {
+const GitHubSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [weeks, setWeeks] = useState<ContributionWeek[]>([]);
@@ -183,7 +183,7 @@ export const GitHubSection = () => {
           {!isLoading && !error && weeks.length > 0 && (
             <div className="w-fit mx-auto min-w-max">
               {/* Day grid */}
-              <div className="flex gap-[3px]">
+              <div className="flex gap-[4px]">
                 {weeks.map((week, wi) => (
                   <div key={wi} className="flex flex-col gap-[3px]">
                     {week.days.map((day, di) => (

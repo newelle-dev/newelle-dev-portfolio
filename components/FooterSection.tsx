@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-export const FooterSection = () => {
+const FooterSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -14,7 +14,7 @@ export const FooterSection = () => {
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : {}}
       transition={{ duration: 0.5 }}
-      className="border-t border-border py-8 px-4 sm:px-6"
+      className="py-8 pt-4 sm:pt-6 px-4 sm:px-6"
     >
       <div className="container max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         {/* Left: Copyright */}

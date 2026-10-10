@@ -2,14 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const Hero: React.FC = () => {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section id="hero" className="pt-32 pb-16 px-4 sm:px-6 md:pt-36 md:pb-20 scroll-mt-24">
       <div className="container max-w-4xl mx-auto">

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Layers, Briefcase, Sparkles } from "lucide-react";
+import { Layers, Briefcase, Code2 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface NavLink {
@@ -17,7 +17,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "About", id: "hero", icon: Layers },
   { label: "Work", id: "projects", icon: Briefcase },
-  { label: "Skills", id: "experience", icon: Sparkles },
+  { label: "Skills", id: "experience", icon: Code2 },
 ];
 
 const SPRING_TRANSITION = {
@@ -27,7 +27,7 @@ const SPRING_TRANSITION = {
   mass: 0.8,
 } as const;
 
-export const Navigation = () => {
+const Navigation = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const [activeSection, setActiveSection] = useState<string>("hero");
@@ -97,6 +97,17 @@ export const Navigation = () => {
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
+  // Broadcast activeSection changes so components (such as ProjectsSection left rail) stay 100% synchronized
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("portfolio-active-section", {
+          detail: { activeSection },
+        })
+      );
+    }
+  }, [activeSection]);
+
   const scrollToSection = (id: string) => {
     setActiveSection(id);
     isClickScrolling.current = true;
@@ -104,6 +115,15 @@ export const Navigation = () => {
     scrollTimeoutRef.current = setTimeout(() => {
       isClickScrolling.current = false;
     }, 800);
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("portfolio-nav-click", { detail: { targetId: id } })
+      );
+      window.dispatchEvent(
+        new CustomEvent("portfolio-active-section", { detail: { activeSection: id } })
+      );
+    }
 
     const element = document.getElementById(id);
     if (element) {

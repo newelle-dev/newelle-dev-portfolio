@@ -6,7 +6,7 @@ interface ProjectFeatureSectionProps extends Project {
   index: number;
 }
 
-export const ProjectFeatureSection = ({
+const ProjectFeatureSection = ({
   title,
   tagline,
   description,
@@ -24,7 +24,7 @@ export const ProjectFeatureSection = ({
       className="group w-full flex flex-col"
     >
       {/* Outer Visual Showcase Card */}
-      <div className="relative w-full rounded-2xl sm:rounded-3xl border border-zinc-200/90 dark:border-white/10 bg-zinc-100/90 dark:bg-zinc-900/50 p-4 sm:p-7 md:p-10 lg:p-12 transition-all duration-300 hover:border-zinc-300 dark:hover:border-white/20">
+      <div className="relative w-full rounded-2xl sm:rounded-3xl border border-zinc-200/90 dark:border-white/10 bg-zinc-100/90 dark:bg-zinc-900/50 p-4 sm:p-7 md:p-10 lg:p-5 transition-all duration-300 hover:border-zinc-300 dark:hover:border-white/20">
         {liveUrl ? (
           <a
             href={liveUrl}
