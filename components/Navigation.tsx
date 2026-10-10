@@ -1,145 +1,279 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Layers, Briefcase, Code2 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
-const navLinks = [
-  { label: "About", id: "about" },
-  { label: "Projects", id: "projects" },
-  { label: "Contact", id: "contact" },
+interface NavLink {
+  label: string;
+  id: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+const navLinks: NavLink[] = [
+  { label: "About", id: "hero", icon: Layers },
+  { label: "Work", id: "projects", icon: Briefcase },
+  { label: "Skills", id: "experience", icon: Code2 },
 ];
 
-export const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+const SPRING_TRANSITION = {
+  type: "spring",
+  stiffness: 350,
+  damping: 28,
+  mass: 0.8,
+} as const;
+
+const Navigation = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const [activeSection, setActiveSection] = useState<string>("hero");
+  const isClickScrolling = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Scroll spy logic using getBoundingClientRect with programmatic scroll lock
   useEffect(() => {
+    if (!isHomePage) return;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (isClickScrolling.current) return;
+
+      // Check if user has scrolled near bottom of page (highlight final section)
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+      if (isAtBottom) {
+        setActiveSection("experience");
+        return;
+      }
+
+      if (window.scrollY < 120) {
+        setActiveSection("hero");
+        return;
+      }
+
+      // Check sections from bottom of the page to top
+      const sectionIds = ["experience", "projects", "hero"];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 260 && rect.bottom > 100) {
+            setActiveSection(id);
+            return;
+          }
+        }
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, [isHomePage]);
+
+  // Handle URL hash on initial load & popstate/hashchange
+  useEffect(() => {
+    const handleHash = () => {
+      if (typeof window !== "undefined" && window.location.hash) {
+        const hash = window.location.hash.replace("#", "");
+        const targetId = hash === "work" ? "projects" : hash;
+        const el = document.getElementById(targetId);
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" });
+            setActiveSection(targetId);
+          }, 120);
+        }
+      }
+    };
+
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
+  // Broadcast activeSection changes so components (such as ProjectsSection left rail) stay 100% synchronized
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("portfolio-active-section", {
+          detail: { activeSection },
+        })
+      );
+    }
+  }, [activeSection]);
+
   const scrollToSection = (id: string) => {
-    setIsMobileOpen(false);
-    const element = document.querySelector(`#${id}`);
-    element?.scrollIntoView({ behavior: "smooth" });
+    setActiveSection(id);
+    isClickScrolling.current = true;
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      isClickScrolling.current = false;
+    }, 800);
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("portfolio-nav-click", { detail: { targetId: id } })
+      );
+      window.dispatchEvent(
+        new CustomEvent("portfolio-active-section", { detail: { activeSection: id } })
+      );
+    }
+
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      if (window.history.pushState) {
+        window.history.pushState(null, "", `#${id}`);
+      } else {
+        window.location.hash = id;
+      }
+    }
   };
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-panel-border"
-          : "bg-transparent"
-      }`}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 sm:gap-1.5 p-1.5 bg-background/85 backdrop-blur-md rounded-full border border-border/80 shadow-md shadow-black/5 dark:shadow-black/20"
+      aria-label="Main Navigation"
     >
-      <div className="container max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          {isHomePage ? (
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className="text-2xl font-bold text-primary font-mono"
-            >
-              &lt;Newelle Dev/&gt;
-            </a>
-          ) : (
-            <Link href="/" className="text-2xl font-bold text-primary font-mono">
-              &lt;Newelle Dev/&gt;
-            </Link>
-          )}
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) =>
-              isHomePage ? (
-                <button
-                  key={link.label}
-                  onClick={() => scrollToSection(link.id)}
-                  className="font-mono text-sm text-muted-foreground hover:text-primary transition-colors relative group"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                </button>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={`/#${link.id}`}
-                  onClick={() => setIsMobileOpen(false)}
-                  className="font-mono text-sm text-muted-foreground hover:text-primary transition-colors relative group"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                </Link>
-              ),
-            )}
-            <ThemeToggle />
-          </div>
-
-          <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="text-foreground hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isMobileOpen ? "auto" : 0,
-            opacity: isMobileOpen ? 1 : 0,
+      {/* Brand Logo (Light & Dark Mode) */}
+      {isHomePage ? (
+        <motion.a
+          href="#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection("hero");
           }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.92 }}
+          transition={SPRING_TRANSITION}
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
+          aria-label="Scroll to top"
         >
-          <div className="py-4 space-y-2">
-            {navLinks.map((link) =>
-              isHomePage ? (
-                <button
-                  key={link.label}
-                  onClick={() => scrollToSection(link.id)}
-                  className="block w-full text-left font-mono text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 px-4 py-2 rounded-lg transition-all"
-                >
-                  <span className="text-primary mr-2">&gt;</span>
-                  {link.label}
-                </button>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={`/#${link.id}`}
-                  onClick={() => setIsMobileOpen(false)}
-                  className="block w-full text-left font-mono text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 px-4 py-2 rounded-lg transition-all"
-                >
-                  <span className="text-primary mr-2">&gt;</span>
-                  {link.label}
-                </Link>
-              ),
-            )}
-          </div>
+          <Image
+            src="/logo-light.png"
+            alt="Newelle Dev"
+            width={32}
+            height={32}
+            className="w-full h-full object-contain rounded-full dark:hidden"
+            priority
+          />
+          <Image
+            src="/logo.png"
+            alt="Newelle Dev"
+            width={32}
+            height={32}
+            className="w-full h-full object-contain rounded-full hidden dark:block"
+            priority
+          />
+        </motion.a>
+      ) : (
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.92 }}
+          transition={SPRING_TRANSITION}
+        >
+          <Link
+            href="/#hero"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
+            aria-label="Home"
+          >
+            <Image
+              src="/logo-light.png"
+              alt="Newelle Dev"
+              width={32}
+              height={32}
+              className="w-full h-full object-contain rounded-full dark:hidden"
+            />
+            <Image
+              src="/logo.png"
+              alt="Newelle Dev"
+              width={32}
+              height={32}
+              className="w-full h-full object-contain rounded-full hidden dark:block"
+            />
+          </Link>
         </motion.div>
+      )}
+
+      {/* Nav Links */}
+      <div className="flex items-center gap-0.5 sm:gap-1">
+        {navLinks.map((link) => {
+          const isActive = activeSection === link.id;
+          const Icon = link.icon;
+
+          return isHomePage ? (
+            <motion.button
+              key={link.id}
+              layout
+              transition={SPRING_TRANSITION}
+              whileTap={{ scale: 0.94 }}
+              onClick={() => scrollToSection(link.id)}
+              className={`relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors select-none ${
+                isActive
+                  ? "text-foreground font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="activePill"
+                  className="absolute inset-0 bg-background dark:bg-secondary rounded-full border border-border/80 shadow-xs -z-0"
+                  transition={SPRING_TRANSITION}
+                />
+              )}
+              <span className="relative z-10 flex items-center">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  {isActive && Icon && (
+                    <motion.span
+                      key={`icon-${link.id}`}
+                      initial={{ opacity: 0, scale: 0.5, width: 0, marginRight: 0 }}
+                      animate={{ opacity: 1, scale: 1, width: "auto", marginRight: 6 }}
+                      exit={{ opacity: 0, scale: 0.5, width: 0, marginRight: 0 }}
+                      transition={{
+                        opacity: { duration: 0.18 },
+                        scale: SPRING_TRANSITION,
+                        width: SPRING_TRANSITION,
+                        marginRight: SPRING_TRANSITION,
+                      }}
+                      className="inline-flex items-center overflow-hidden shrink-0"
+                    >
+                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                <span>{link.label}</span>
+              </span>
+            </motion.button>
+          ) : (
+            <motion.div
+              key={link.id}
+              whileTap={{ scale: 0.94 }}
+              transition={SPRING_TRANSITION}
+            >
+              <Link
+                href={`/#${link.id}`}
+                className="relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors select-none flex items-center gap-1.5"
+              >
+                {isActive && Icon && <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />}
+                <span>{link.label}</span>
+              </Link>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Theme toggle - visible on desktop, hidden on mobile for ultra-compact pill */}
+      <div className="hidden md:flex items-center pl-1 border-l border-border/60 ml-0.5">
+        <ThemeToggle />
       </div>
     </motion.nav>
   );

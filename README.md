@@ -29,32 +29,30 @@ A modern, responsive portfolio website showcasing projects, experience, and serv
 
 ```
 components/          # Reusable React components
-├── AboutSection.tsx      # About/bio section
-├── CodeWindow.tsx        # Code display component
-├── ContactSection.tsx    # Contact form and info
-├── FloatingIcons.tsx     # Animated background icons
-├── HeroSection.tsx       # Hero/landing section
-├── Navigation.tsx        # Navigation bar
-├── NavLinks.tsx          # Navigation links component
-├── ProjectCard.tsx       # Individual project card
-├── ProjectsSection.tsx   # Projects grid/showcase
-├── ShopifyCard.tsx       # Shopify project card
-└── ShopifySection.tsx    # Shopify work section
+├── ExperienceSection.tsx     # Work experience section
+├── FooterSection.tsx         # Footer with social links
+├── GitHubSection.tsx         # Live GitHub contribution graph
+├── HeroSection.tsx           # Hero/landing section
+├── Navigation.tsx            # Floating pill navigation bar
+├── ProjectFeatureSection.tsx # Individual project feature card
+├── ProjectsSection.tsx       # Projects showcase section
+├── TechStackSection.tsx      # Tech stack pills section
+├── ThemeProvider.tsx         # Next-themes wrapper
+└── ThemeToggle.tsx           # Light/dark mode toggle
 
-hooks/               # Custom React hooks
-├── use-mobile.tsx        # Mobile detection hook
-
-lib/                 # Utility functions
-├── utils.ts              # Helper utilities
+lib/                 # Utility functions and portfolio data
+├── experience.ts             # Experience data
+├── projects.ts               # Featured projects data
+└── utils.ts                  # Helper utilities
 
 types/               # TypeScript type definitions
-├── global.d.ts           # Global type declarations
-└── types.ts              # App-specific types
+├── global.d.ts               # Global type declarations
+└── types.ts                  # App-specific types
 
 app/                 # Next.js app directory
-├── layout.tsx            # Root layout component
-├── page.tsx              # Home page
-└── globals.css           # Global styles
+├── layout.tsx                # Root layout component
+├── page.tsx                  # Home page
+└── globals.css               # Global styles
 ```
 
 ## 🚀 Getting Started

@@ -3,6 +3,7 @@ import { Project } from "@/types/types";
 export const projects: Project[] = [
   {
     title: "VapeTrack PH",
+    tagline: "Multi-branch sales and inventory management software",
     description:
       "Multi-branch sales and inventory management system with real-time stock tracking, dual authentication (4-digit PIN for staff, Email/Password for owners), and analytics dashboard with revenue charts. Fullstack application deployed on Vercel.",
     techStack: [
@@ -21,6 +22,7 @@ export const projects: Project[] = [
 
   {
     title: "Devfinder",
+    tagline: "Developer search and GitHub exploration engine",
     description:
       "Discover GitHub users with a clean, fast React + Vite app. Search by username, view profile details, and jump to followers, following, and repositories. Responsive design with Tailwind CSS and smooth animations using Framer Motion. Powered by GitHub's API for real-time data.",
     techStack: [
@@ -36,8 +38,9 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/newelle-dev/devfinder",
     featured: true,
   },
-    {
+  {
     title: "RevvUp Auto",
+    tagline: "High-conversion auto workshop and service booking platform",
     description:
       "Professional auto workshop landing site with a conversion-first single-page flow: hero, services, testimonials, and contact/location CTAs. Data-driven business content and component-driven UI for clear customer actions.",
     techStack: [
