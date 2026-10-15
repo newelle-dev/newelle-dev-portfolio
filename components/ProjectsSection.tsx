@@ -7,7 +7,7 @@ import ProjectFeatureSection from "./ProjectFeatureSection";
 
 const ProjectsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
+  const featuredProjects = projects.filter((project) => project.featured);
 
   const [activeProjectIndex, setActiveProjectIndex] = useState<number>(0);
   const [isWorkSectionActive, setIsWorkSectionActive] = useState<boolean>(false);

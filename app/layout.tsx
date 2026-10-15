@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://newelle.dev"),
   title: "Newelle Dev | Fullstack Web Developer",
   description:
     "Fullstack Web Developer specializing in Next.js, TypeScript, React, and Supabase. Building scalable applications with PostgreSQL, authentication systems, and modern UI frameworks.",
