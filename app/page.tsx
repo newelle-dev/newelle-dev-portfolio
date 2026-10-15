@@ -6,6 +6,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import TechStackSection from "@/components/TechStackSection";
 import GitHubSection from "@/components/GitHubSection";
 import FooterSection from "@/components/FooterSection";
+import FloatingContact from "@/components/FloatingContact";
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
         <GitHubSection />
       </main>
       <FooterSection />
+      <FloatingContact />
     </div>
   );
 };

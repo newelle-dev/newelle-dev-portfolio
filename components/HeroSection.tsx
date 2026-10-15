@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 text-foreground"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-balance mb-4 text-foreground"
           >
             Hello, I&apos;m{' '}
             <span className="text-primary">Newelle</span>.
@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-muted-foreground mb-3 max-w-xl"
+            className="text-lg sm:text-xl font-medium text-foreground/90 mb-3 max-w-xl"
           >
             Software Engineer &amp; Fullstack Developer based in the Philippines.
           </motion.p>
@@ -39,10 +39,9 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-base sm:text-lg text-muted-foreground mb-8 max-w-xl"
+            className="text-base sm:text-lg leading-relaxed text-muted-foreground mb-8 max-w-xl"
           >
-            I like building things end to end, from the first idea to the final product.
-            I&apos;m always looking for a better way to solve things.
+            I enjoy turning manual processes into software, solving bugs, and building systems that people actually use.
           </motion.p>
 
           {/* CTAs */}
@@ -52,7 +51,9 @@ const Hero: React.FC = () => {
             transition={{ delay: 0.4, duration: 0.4 }}
             className="flex flex-wrap items-center gap-3 relative"
           >
-            <ExpandableContact />
+            <div id="hero-contact-anchor" className="inline-block">
+              <ExpandableContact />
+            </div>
 
             <a
               href="/NEWELLE_DEV_2026.pdf"

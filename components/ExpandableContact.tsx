@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Code2, Users, ArrowUpRight, Copy, Check, X } from "lucide-react";
 
-interface ContactItem {
+export interface ContactItem {
   id: string;
   title: string;
   subtitle: string;
@@ -14,7 +14,7 @@ interface ContactItem {
   canCopy?: boolean;
 }
 
-const contactItems: ContactItem[] = [
+export const contactItems: ContactItem[] = [
   {
     id: "email",
     title: "Email",
