@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
+import { ExpandableContact } from './ExpandableContact';
 
 const Hero: React.FC = () => {
   return (
@@ -50,22 +50,17 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.4 }}
-            className="flex flex-wrap items-center gap-3"
+            className="flex flex-wrap items-center gap-3 relative"
           >
+            <ExpandableContact />
+
             <a
-              href="mailto:nrquiambao1499@gmail.com"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background text-sm font-medium rounded-lg hover:opacity-80 transition-opacity"
-            >
-              <Mail className="w-4 h-4" />
-              Contact
-            </a>
-            <a
-              href="/resume.pdf"
+              href="/NEWELLE_DEV_2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:border-foreground/40 transition-colors"
             >
-              Resume
+              Résumé
             </a>
           </motion.div>
         </motion.div>

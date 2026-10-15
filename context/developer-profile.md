@@ -16,7 +16,7 @@
 
 | Platform | Handle / Identifier | Link / URL |
 | :--- | :--- | :--- |
-| **Email** | `nrquiambao1499@gmail.com` | [mailto:nrquiambao1499@gmail.com](mailto:nrquiambao1499@gmail.com) |
+| **Email** | `newelle.dev@gmail.com` | [mailto:newelle.dev@gmail.com](mailto:newelle.dev@gmail.com) |
 | **LinkedIn** | `/in/nrquiambao` | [linkedin.com/in/nrquiambao](https://www.linkedin.com/in/nrquiambao/) |
 | **GitHub** | `@newelle-dev` | [github.com/newelle-dev](https://github.com/newelle-dev) |
 | **WhatsApp** | `+60 11-2536 6014` | [wa.me/601125366014](https://wa.me/601125366014) |

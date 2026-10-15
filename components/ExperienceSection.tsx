@@ -27,22 +27,18 @@ const ExperienceSection = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 py-4"
+              className="flex flex-col gap-1 py-4"
             >
-              {/* Left: Company + Role */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-0 sm:gap-2.5">
-                <span className="font-semibold text-foreground text-sm sm:text-base">
-                  {exp.company}
-                </span>
-                <span className="text-muted-foreground text-sm">
-                  {exp.role}
-                </span>
-              </div>
-
-              {/* Right: Date */}
-              <span className="text-muted-foreground text-sm shrink-0">
-                {exp.period}
+              {/* Company */}
+              <span className="font-semibold text-foreground text-sm sm:text-base">
+                {exp.company}
               </span>
+
+              {/* Role & Period */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 text-sm text-muted-foreground">
+                <span>{exp.role}</span>
+                <span className="shrink-0">{exp.period}</span>
+              </div>
             </motion.div>
           ))}
         </div>
