@@ -155,7 +155,7 @@ const Navigation = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.92 }}
           transition={SPRING_TRANSITION}
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
+          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
           aria-label="Scroll to top"
         >
           <Image
@@ -183,7 +183,7 @@ const Navigation = () => {
         >
           <Link
             href="/#hero"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
+            className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 select-none mr-0.5 overflow-hidden"
             aria-label="Home"
           >
             <Image
@@ -217,7 +217,7 @@ const Navigation = () => {
               transition={SPRING_TRANSITION}
               whileTap={{ scale: 0.94 }}
               onClick={() => scrollToSection(link.id)}
-              className={`relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors select-none ${
+              className={`relative px-3.5 sm:px-3.5 py-2 sm:py-1.5 rounded-full text-sm font-medium transition-colors select-none touch-manipulation ${
                 isActive
                   ? "text-foreground font-semibold"
                   : "text-muted-foreground hover:text-foreground"
@@ -246,7 +246,7 @@ const Navigation = () => {
                       }}
                       className="inline-flex items-center overflow-hidden shrink-0"
                     >
-                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                      <Icon className="w-4 h-4 shrink-0" />
                     </motion.span>
                   )}
                 </AnimatePresence>
@@ -261,9 +261,9 @@ const Navigation = () => {
             >
               <Link
                 href={`/#${link.id}`}
-                className="relative px-3 sm:px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors select-none flex items-center gap-1.5"
+                className="relative px-3.5 sm:px-3.5 py-2 sm:py-1.5 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors select-none flex items-center gap-1.5 touch-manipulation"
               >
-                {isActive && Icon && <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />}
+                {isActive && Icon && <Icon className="w-4 h-4 shrink-0" />}
                 <span>{link.label}</span>
               </Link>
             </motion.div>
@@ -272,7 +272,7 @@ const Navigation = () => {
       </div>
 
       {/* Theme toggle - visible on desktop, hidden on mobile for ultra-compact pill */}
-      <div className="hidden md:flex items-center pl-1 border-l border-border/60 ml-0.5">
+      <div className="md:flex items-center pl-1 border-l border-border/60 ml-0.5">
         <ThemeToggle />
       </div>
     </motion.nav>

@@ -44,7 +44,7 @@ const ProjectFeatureSection = ({
       </Link>
 
       {/* Bottom Metadata Row */}
-      <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5 px-0.5">
+      <div className="mt-3 sm:mt-4 flex items-center sm:items-baseline justify-between gap-2.5 px-0.5">
         {/* Left: Bold Title + Inline Tagline (Clickable link to case study) */}
         <Link
           href={`/projects/${slug}`}
@@ -53,16 +53,16 @@ const ProjectFeatureSection = ({
           <h3 className="font-bold text-foreground text-base sm:text-lg tracking-tight group-hover/title:text-primary transition-colors">
             {title}
           </h3>
-          <span className="text-muted-foreground text-sm sm:text-base font-normal">
+          <span className="hidden sm:inline text-muted-foreground text-sm sm:text-base font-normal">
             {tagline || description}
           </span>
         </Link>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-3 shrink-0 self-start sm:self-auto pt-1 sm:pt-0">
+        <div className="flex items-center gap-3 shrink-0">
           <Link
             href={`/projects/${slug}`}
-            className="group/link inline-flex items-center gap-1 text-xs sm:text-sm md:text-base font-medium text-foreground hover:text-primary transition-colors p-1"
+            className="group/link inline-flex items-center gap-1.5 text-sm sm:text-base font-medium text-foreground hover:text-primary transition-colors py-1 px-1.5 sm:p-1"
           >
             <span>View Project</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5" />

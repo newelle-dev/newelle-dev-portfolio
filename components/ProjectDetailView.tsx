@@ -4,9 +4,16 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, Github, Lock, ArrowRight } from "lucide-react";
+import {
+  Undo2,
+  ArrowLeft,
+  ArrowUpRight,
+  Github,
+  Lock,
+  ArrowRight,
+} from "lucide-react";
 import { Project } from "@/types/types";
-import { ThemeToggle } from "./ThemeToggle";
+import { ExpandableVisit } from "./ExpandableVisit";
 
 interface ProjectDetailViewProps {
   project: Project;
@@ -30,7 +37,6 @@ export default function ProjectDetailView({
   prevProject,
 }: ProjectDetailViewProps) {
   const caseStudyRef = useRef<HTMLDivElement>(null);
-  const jumpBarRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<SectionId>("overview");
   const [isCaseStudyActive, setIsCaseStudyActive] = useState<boolean>(false);
   const isClickScrolling = useRef(false);
@@ -75,20 +81,6 @@ export default function ProjectDetailView({
     };
   }, []);
 
-  // Auto-scroll active section into view in mobile jump bar
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 1280) {
-      const activeButton = document.getElementById(`mobile-nav-${activeSection}`);
-      if (activeButton && jumpBarRef.current) {
-        activeButton.scrollIntoView({
-          behavior: "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-      }
-    }
-  }, [activeSection]);
-
   const scrollToSection = (id: SectionId) => {
     setActiveSection(id);
     isClickScrolling.current = true;
@@ -99,8 +91,7 @@ export default function ProjectDetailView({
 
     const el = document.getElementById(id);
     if (el) {
-      // On mobile (< 1280px), both header and sticky jump bar occupy top space
-      const yOffset = window.innerWidth < 1280 ? -110 : -84;
+      const yOffset = window.innerWidth < 1280 ? -28 : -84;
       const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -180,56 +171,28 @@ export default function ProjectDetailView({
         )}
       </AnimatePresence>
 
-      {/* Top Header Bar */}
-      <header className="sticky top-0 z-50 w-full bg-background/85 backdrop-blur-md border-b border-border/60 transition-colors">
-        <div className="container max-w-4xl mx-auto px-3.5 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-          {/* Left: Back to Projects */}
+      {/* Main Container */}
+      <main className="container max-w-4xl mx-auto px-5 sm:px-6 pt-7 sm:pt-12 md:pt-14 pb-16 sm:pb-24">
+        {/* Top Action Bar: Clean 'Return' & 'Visit site' spaced between (Responsive across mobile & desktop) */}
+        <div className="flex items-center justify-between gap-3 mb-10 sm:mb-14">
+          {/* Left: Return button */}
           <Link
             href="/#projects"
-            className="group inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full border border-border/80 bg-background hover:bg-secondary/80 text-xs sm:text-sm font-medium text-foreground transition-all duration-200 active:scale-95 shadow-2xs"
+            className="group inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-secondary/80 hover:bg-secondary text-sm font-medium text-foreground transition-all duration-200 active:scale-95 border border-border/60 shadow-2xs"
             aria-label="Back to all projects"
           >
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
-            <span>Projects</span>
+            <Undo2 className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+            <span>Return</span>
           </Link>
 
-          {/* Right: Actions */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-1.5 sm:p-2 rounded-full border border-border/80 bg-background hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 active:scale-95 shadow-2xs"
-                title="View GitHub repository"
-                aria-label="View source code on GitHub"
-              >
-                <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </a>
-            )}
-
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 rounded-full bg-foreground text-background hover:opacity-90 text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95 shadow-xs"
-                aria-label={`Visit live site for ${project.title}`}
-              >
-                <span>Visit site</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            )}
-
-            <div className="pl-0.5 sm:pl-1 border-l border-border/60 ml-0.5">
-              <ThemeToggle />
-            </div>
-          </div>
+          {/* Right: Expandable Visit Menu */}
+          <ExpandableVisit
+            liveUrl={project.liveUrl}
+            githubUrl={project.githubUrl}
+            projectTitle={project.title}
+          />
         </div>
-      </header>
 
-      {/* Main Container */}
-      <main className="container max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-12 md:pt-14 pb-16 sm:pb-24">
         {/* Project Header Info */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -239,18 +202,18 @@ export default function ProjectDetailView({
         >
           {/* Eyebrow Category */}
           {project.category && (
-            <p className="text-[11px] sm:text-xs font-semibold tracking-wider sm:tracking-widest uppercase text-muted-foreground mb-2 sm:mb-3 select-none">
+            <p className="text-xs sm:text-xs font-medium text-muted-foreground mb-2 sm:mb-2.5 select-none">
               {project.category}
             </p>
           )}
 
           {/* Project Title */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
             {project.title}
           </h1>
 
           {/* Subtitle / Tagline */}
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mb-4 sm:mb-6">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-5 sm:mb-6">
             {project.tagline || project.description}
           </p>
 
@@ -259,7 +222,7 @@ export default function ProjectDetailView({
             {project.techStack.map((tech) => (
               <span
                 key={tech}
-                className="px-2.5 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium bg-secondary/80 border border-border/70 text-secondary-foreground select-none"
+                className="px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-xs sm:text-xs font-medium bg-secondary/50 dark:bg-secondary/30 border border-border/80 text-foreground/85 select-none"
               >
                 {tech}
               </span>
@@ -330,39 +293,14 @@ export default function ProjectDetailView({
           ))}
         </motion.div>
 
-        {/* Mobile Horizontal Section Jump Bar (Visible on mobile/tablet, hidden on desktop where fixed rail is active) */}
-        <div
-          ref={jumpBarRef}
-          className="xl:hidden sticky top-14 sm:top-16 z-30 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2 sm:py-2.5 bg-background/90 backdrop-blur-md border-b border-border/60 mb-8 sm:mb-12 overflow-x-auto flex items-center gap-1.5 sm:gap-2 scrollbar-none"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          {SECTIONS.map((sec) => {
-            const isActive = activeSection === sec.id;
-            return (
-              <button
-                key={sec.id}
-                id={`mobile-nav-${sec.id}`}
-                type="button"
-                onClick={() => scrollToSection(sec.id)}
-                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors duration-150 shrink-0 select-none ${isActive
-                    ? "bg-foreground text-background font-semibold shadow-xs"
-                    : "bg-secondary/80 text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                {sec.label}
-              </button>
-            );
-          })}
-        </div>
-
         {/* Content Section: Full width clean layout */}
         <div ref={caseStudyRef} className="flex flex-col gap-10 sm:gap-14 md:gap-16">
           {/* 1. Overview */}
-          <section id="overview" className="scroll-mt-28">
+          <section id="overview" className="scroll-mt-20">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
               Overview
             </h2>
-            <div className="space-y-3.5 sm:space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <div className="space-y-3.5 sm:space-y-4 text-[15px] sm:text-base text-muted-foreground leading-relaxed">
               {project.overview.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -370,7 +308,7 @@ export default function ProjectDetailView({
           </section>
 
           {/* 2. What I Built */}
-          <section id="what-i-built" className="scroll-mt-28">
+          <section id="what-i-built" className="scroll-mt-20">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
               What I Built
             </h2>
@@ -378,7 +316,7 @@ export default function ProjectDetailView({
               {project.whatIBuilt.map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2.5 sm:gap-3 text-sm sm:text-base text-muted-foreground leading-relaxed"
+                  className="flex items-start gap-2.5 sm:gap-3 text-[15px] sm:text-base text-muted-foreground leading-relaxed"
                 >
                   <span className="text-primary font-bold select-none mt-0.5 sm:mt-1 shrink-0">
                     –
@@ -390,11 +328,11 @@ export default function ProjectDetailView({
           </section>
 
           {/* 3. Engineering */}
-          <section id="engineering" className="scroll-mt-28">
+          <section id="engineering" className="scroll-mt-20">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
               Engineering
             </h2>
-            <div className="space-y-3.5 sm:space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <div className="space-y-3.5 sm:space-y-4 text-[15px] sm:text-base text-muted-foreground leading-relaxed">
               {project.engineering.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -402,21 +340,21 @@ export default function ProjectDetailView({
           </section>
 
           {/* 4. Outcome */}
-          <section id="outcome" className="scroll-mt-28">
+          <section id="outcome" className="scroll-mt-20">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
               Outcome
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <p className="text-[15px] sm:text-base text-muted-foreground leading-relaxed">
               {project.outcome}
             </p>
           </section>
 
           {/* 5. Status */}
-          <section id="status" className="scroll-mt-28">
+          <section id="status" className="scroll-mt-20">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
               Status
             </h2>
-            <div className="p-3.5 sm:p-5 rounded-xl border border-border/80 bg-secondary/30 text-sm sm:text-base text-muted-foreground leading-relaxed">
+            <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-secondary/30 text-[15px] sm:text-base text-muted-foreground leading-relaxed">
               {project.status}
             </div>
           </section>
@@ -465,15 +403,6 @@ export default function ProjectDetailView({
           <span>
             © {new Date().getFullYear()} Newell Lewis Quiambao
           </span>
-
-          {/* Center: Discuss Pill Button */}
-          <a
-            href="mailto:newelle.dev@gmail.com?subject=Project%20Discussion"
-            className="group inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-border/80 bg-background hover:bg-secondary/80 text-xs sm:text-sm font-medium text-foreground transition-all duration-200 active:scale-95 shadow-2xs w-full sm:w-auto"
-          >
-            <span>Discuss project</span>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
 
           {/* Right: Social Links */}
           <div className="flex items-center justify-center gap-5 sm:gap-6">

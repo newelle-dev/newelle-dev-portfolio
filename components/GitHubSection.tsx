@@ -111,12 +111,60 @@ const GitHubSection = () => {
       if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
       setTooltip(null);
     };
+    const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
+      if (!(e.target as HTMLElement).closest?.(".contribution-day")) {
+        if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
+        setTooltip(null);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("click", handleOutsideInteraction);
+    window.addEventListener("touchstart", handleOutsideInteraction, { passive: true });
     return () => {
       if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("click", handleOutsideInteraction);
+      window.removeEventListener("touchstart", handleOutsideInteraction);
     };
   }, []);
+
+  const showTooltip = (target: HTMLElement, day: ContributionDay, immediate = false) => {
+    if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
+    const rect = target.getBoundingClientRect();
+    const screenW = typeof window !== "undefined" ? window.innerWidth : 1000;
+    const clampedX = Math.max(90, Math.min(screenW - 90, rect.left + rect.width / 2));
+
+    const setPosition = () => {
+      setTooltip({
+        date: day.date,
+        count: day.count,
+        x: clampedX,
+        y: rect.top,
+      });
+    };
+
+    if (immediate) {
+      setPosition();
+    } else {
+      tooltipTimerRef.current = setTimeout(setPosition, 200);
+    }
+  };
+
+  const hideTooltip = () => {
+    if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current);
+    setTooltip(null);
+  };
+
+  const renderDaySquare = (day: ContributionDay, key: string | number) => (
+    <div
+      key={key}
+      className={`contribution-day w-[12px] h-[12px] rounded-sm cursor-default transition-transform hover:scale-150 hover:z-10 relative ${getLevelClass(day.level)}`}
+      onClick={(e) => showTooltip(e.currentTarget, day, true)}
+      onMouseEnter={(e) => showTooltip(e.currentTarget, day)}
+      onMouseLeave={hideTooltip}
+    />
+  );
 
   return (
     <section id="github" className="py-16 px-4 sm:px-6">
@@ -127,12 +175,12 @@ const GitHubSection = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.4 }}
-          className="flex items-baseline justify-between mb-3"
+          className="flex flex-wrap items-baseline justify-between gap-2 mb-3"
         >
-          <div className="flex items-baseline gap-3">
+          <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
             <span className="section-label mb-0">GitHub</span>
             {totalThisYear !== null && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 {totalThisYear} contributions this year
               </span>
             )}
@@ -141,7 +189,7 @@ const GitHubSection = () => {
             href={GITHUB_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             @{GITHUB_USERNAME}
             <ExternalLink className="w-3.5 h-3.5" />
@@ -165,8 +213,7 @@ const GitHubSection = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="overflow-x-auto overflow-y-hidden py-2"
-          onScroll={() => setTooltip(null)}
+          className="py-2"
         >
           {isLoading && (
             <div className="h-28 rounded-lg bg-secondary animate-pulse" />
@@ -181,45 +228,37 @@ const GitHubSection = () => {
           )}
 
           {!isLoading && !error && weeks.length > 0 && (
-            <div className="w-fit mx-auto min-w-max">
-              {/* Day grid */}
-              <div className="flex gap-[4px]">
-                {weeks.map((week, wi) => (
-                  <div key={wi} className="flex flex-col gap-[3px]">
-                    {week.days.map((day, di) => (
-                      <div
-                        key={di}
-                        className={`w-[12px] h-[12px] rounded-sm cursor-default transition-transform hover:scale-150 hover:z-10 relative ${getLevelClass(day.level)}`}
-                        onMouseEnter={(e) => {
-                          if (tooltipTimerRef.current) {
-                            clearTimeout(tooltipTimerRef.current);
-                          }
-                          const target = e.currentTarget;
-                          const rect = target.getBoundingClientRect();
-                          const screenW = typeof window !== "undefined" ? window.innerWidth : 1000;
-                          const clampedX = Math.max(90, Math.min(screenW - 90, rect.left + rect.width / 2));
-
-                          tooltipTimerRef.current = setTimeout(() => {
-                            setTooltip({
-                              date: day.date,
-                              count: day.count,
-                              x: clampedX,
-                              y: rect.top,
-                            });
-                          }, 200);
-                        }}
-                        onMouseLeave={() => {
-                          if (tooltipTimerRef.current) {
-                            clearTimeout(tooltipTimerRef.current);
-                          }
-                          setTooltip(null);
-                        }}
-                      />  
+            <>
+              {/* Mobile View: Compact non-scrollable summary (~last 4 months) */}
+              <div className="sm:hidden flex flex-col items-center gap-2.5">
+                <div className="w-fit mx-auto">
+                  <div className="flex gap-[4px]">
+                    {weeks.slice(-24).map((week, wi) => (
+                      <div key={wi} className="flex flex-col gap-[3px]">
+                        {week.days.map((day, di) => renderDaySquare(day, di))}
+                      </div>
                     ))}
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+
+              {/* Desktop / Tablet View: Full year graph */}
+              <div
+                className="hidden sm:block overflow-x-auto overflow-y-hidden py-2"
+                onScroll={() => setTooltip(null)}
+              >
+                <div className="w-fit mx-auto min-w-max">
+                  {/* Day grid */}
+                  <div className="flex gap-[4px]">
+                    {weeks.map((week, wi) => (
+                      <div key={wi} className="flex flex-col gap-[3px]">
+                        {week.days.map((day, di) => renderDaySquare(day, di))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
           )}
         </motion.div>
       </div>

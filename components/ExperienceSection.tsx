@@ -15,7 +15,7 @@ const ExperienceSection = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.4 }}
-          className="section-label"
+          className="text-2lg font-bold text-foreground"
         >
           Experience
         </motion.p>
@@ -35,7 +35,7 @@ const ExperienceSection = () => {
               </span>
 
               {/* Role & Period */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 text-sm text-muted-foreground">
+              <div className="flex items-baseline justify-between gap-2 sm:gap-4 text-sm text-muted-foreground">
                 <span>{exp.role}</span>
                 <span className="shrink-0">{exp.period}</span>
               </div>
