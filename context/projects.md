@@ -76,12 +76,29 @@ This document details the featured and notable projects created by Newelle Alec 
 
 ---
 
-## 🏢 Additional Notable Work
+### 4. RFID Attendance System
 
-### RFID-Based Enterprise Attendance Tracking System
-- **Focus:** Company branch operational management
-- **Stack:** MySQL, Node.js, Express, Hardware RFID Scanner Integration
-- **Impact:** Automated manual attendance logs, minimized clock-in bottlenecks across physical branch locations, and generated accurate shift attendance reports.
+- **Category:** Full-Stack Enterprise / Hardware Integration
+- **Repository:** [https://github.com/newelle-dev/rfid-attendance-system](https://github.com/newelle-dev/rfid-attendance-system)
+- **Preview Image:** `/project-img/rfid-project/dashboard_page.png`
+- **Tech Stack:**
+  - Next.js 16 (App Router)
+  - React 19
+  - MySQL (`mysql2` connection pool)
+  - NextAuth.js
+  - Tailwind CSS 4
+  - Radix UI & Base UI
+  - TanStack Table 8
+  - Framer Motion 12
+  - Zod 3.25
+  - Day.js
+
+#### Overview & Key Features:
+- **Kiosk Attendance Terminal:** Corporate lobby terminal with digital HUD clock, Philippine Standard Time (UTC+8) telemetry, and keystroke-guarded RFID HID keyboard listener.
+- **Instant Punch Confirmation Dossier:** Sub-second badge swipe verification presenting employee photo, Ashima ID, and paired Time In/Out status with an auto-clearing timer.
+- **Enterprise Admin Portal:** Standardized 4-tier layout (PageHeader -> Command Header -> KPI Strip -> Main Workspace Card) across all modules.
+- **Concurrent Server Data Streaming:** Employee and attendance workspaces powered by React Server Components without client waterfalls.
+- **Granular RBAC:** Role-based permissions matrix for superadmin, admin, security, and HR roles, cached directly in NextAuth JWT sessions.
 
 ---
 

@@ -2,6 +2,99 @@ import { Project } from "@/types/types";
 
 export const projects: Project[] = [
   {
+  slug: "rfid-attendance-system",
+  title: "RFID Attendance System",
+  category: "Full-Stack Enterprise / Hardware Integration",
+  tagline: "High-performance RFID attendance kiosk & enterprise administration suite",
+  description:
+    "Enterprise attendance management system pairing a hardware-integrated RFID kiosk terminal with an administrative command portal. Built with Next.js 16 App Router, React 19, and MySQL, featuring sub-second punch logging, keystroke-guarded HID card scanning, and role-based access control.",
+  techStack: [
+    "Next.js 16",
+    "React 19",
+    "MySQL",
+    "NextAuth.js",
+    "Tailwind CSS 4",
+    "Base UI / Radix",
+    "TanStack Table",
+    "Framer Motion",
+    "Zod",
+    "Day.js",
+  ],
+  imageUrl: "/project-img/rfid-project/dashboard_page.png",
+  showcaseScreens: [
+    {
+      title: "Enterprise Admin Dashboard & Live Feed",
+      description:
+        "Real-time employee counts, today's punch metrics, and live chronological activity stream.",
+      imageUrl: "/project-img/rfid-project/dashboard_page.png",
+      alt: "Admin Portal Dashboard Overview",
+    },
+    {
+      title: "Kiosk Attendance Terminal",
+      description:
+        "Lobby display terminal calibrated for corporate screens with high-tech HUD digital clock and live UTC+8 telemetry.",
+      imageUrl: "/project-img/rfid-project/kiosk_page.jpeg",
+      alt: "RFID Kiosk Terminal Interface",
+    },
+    {
+      title: "Instant Punch Confirmation Dossier",
+      description:
+        "Sub-second badge swipe verification displaying employee photo, paired Time In/Out record, and auto-dismiss timer.",
+      imageUrl: "/project-img/rfid-project/kiosk_employee_card.jpeg",
+      alt: "Kiosk Punch Confirmation Overlay",
+    },
+    {
+      title: "Employee Records & Dossier Management",
+      description:
+        "Server-side data streaming with React Server Components, RFID tag binding, photo uploads, and slide-over sheets.",
+      imageUrl: "/project-img/rfid-project/employee_management_page.png",
+      alt: "Employee Management Records Table",
+    },
+    {
+      title: "Attendance Logs & Daily Log Viewer",
+      description:
+        "Searchable punch logs with date range and department filtering, punch status badges, and client-side CSV export.",
+      imageUrl: "/project-img/rfid-project/attendance_logs_page.png",
+      alt: "Attendance Punch Logs",
+    },
+    {
+      title: "Role-Based Access Control Matrix",
+      description:
+        "Granular administrative permission switches cached in JWT session tokens across superadmin, admin, security, and HR roles.",
+      imageUrl: "/project-img/rfid-project/role_permision_page.png",
+      alt: "Role Permissions Configuration Matrix",
+    },
+  ],
+  githubUrl: "https://github.com/newelle-dev/rfid-attendance-system",
+  featured: true,
+  overview: [
+    "The RFID Attendance System is an end-to-end workforce tracking solution designed to replace manual logbooks and error-prone biometric finger scanners in corporate lobbies and operational facilities. Traditional biometric scanners frequently encounter hardware latency, high maintenance costs, and congested queues during shift turnovers.",
+    "Engineered with Next.js 16 and React 19, the platform combines a dedicated kiosk attendance terminal with a high-performance administrative command portal. Employees tap their RFID cards for sub-second attendance verification with audio-visual feedback, while HR and operations leaders monitor real-time workforce attendance through a responsive management dashboard.",
+  ],
+  whatIBuilt: [
+    "Lobby kiosk attendance terminal calibrated for wall-mounted 1080p and 4K displays featuring a high-tech HUD digital clock with Philippine Standard Time (UTC+8) telemetry and an animated seconds meter.",
+    "Keystroke-guarded RFID HID hardware listener (lib/HIDListeners.js) that captures USB card swipes instantly while ignoring active inputs (INPUT, TEXTAREA, SELECT, contenteditable) to prevent scan interference.",
+    "High-contrast punch confirmation dossier overlay presenting employee photo, Ashima ID, department, and paired Time In/Out status with a 9-second auto-clearing progress bar.",
+    "Interactive badge simulator drawer (invoked via hotkey 'D') enabling instant developer and QA testing of valid and unregistered badge scans without physical hardware.",
+    "Admin portal built with a standardized 4-tier layout (PageHeader -> Command Header -> KPI Strip -> Main Workspace Card) across all modules.",
+    "Employee records workspace powered by React Server Components for concurrent data fetching, slide-over Sheet dossiers, and base64 photo uploads.",
+    "Attendance logs module featuring paired daily punch histories, department filters, date range pickers, and client-side CSV export.",
+    "Granular Role-Based Access Control (RBAC) matrix supporting superadmin, admin, security, and HR roles with bcrypt-hashed credentials.",
+    "Global keyboard command palette (Cmd+K / Ctrl+K) for rapid administrative navigation.",
+  ],
+  engineering: [
+    "Architected around Next.js 16 App Router and React Server Components to stream employee and attendance datasets concurrently from a MySQL connection pool (mysql2) without client waterfalls.",
+    "Designed an embedded JWT permissions mechanism with NextAuth.js that encodes module permissions directly into the user session token upon authentication, eliminating redundant permission queries on every administrative route transition.",
+    "Implemented Next.js 16 route proxy middleware (proxy.js) to intercept unauthorized navigations before page rendering, coupled with strict requireAdminSession API route guards.",
+    "Engineered keystroke buffer velocity detection and target guarding in HIDListeners.js to differentiate between rapid hardware barcode/RFID scanner inputs and standard keyboard typing.",
+    "Enforced end-to-end data validation using centralized Zod schemas on all administrative mutation payloads and parameterized SQL queries to prevent SQL injection.",
+  ],
+  outcome:
+    "Delivered a seamless, sub-second tap-and-go attendance experience that eliminated shift turnaround bottlenecks. The unified administrative suite gave HR teams instantaneous attendance tracking, automated punch pairing, and audit-ready reporting.",
+  status:
+    "Completed and production-ready with multi-stage Docker containerization for instant deployment on local networks and dedicated kiosk hardware.",
+},
+  {
     slug: "vapetrack-ph",
     title: "VapeTrack PH",
     category: "Full-Stack SaaS / Retail & Inventory",
@@ -60,125 +153,6 @@ export const projects: Project[] = [
       "Live in production and actively maintained. Next enhancements include barcode scanner SDK integration, Bluetooth ESC/POS thermal receipt printing, and automated supplier reorder notifications.",
   },
 
-  {
-    slug: "devfinder",
-    title: "Devfinder",
-    category: "Developer Tooling / GitHub Exploration",
-    tagline: "Developer search and GitHub exploration engine",
-    description:
-      "Discover GitHub users with a clean, fast React + Vite app. Search by username, view profile details, and jump to followers, following, and repositories. Responsive design with Tailwind CSS and smooth animations using Framer Motion. Powered by GitHub's API for real-time data.",
-    techStack: [
-      "React 19",
-      "Vite 7",
-      "Tailwind CSS 4",
-      "Axios",
-      "Lucide React",
-      "GitHub API",
-      "Framer Motion",
-    ],
-    imageUrl: "/project-img/devfinder.webp",
-    showcaseScreens: [
-      {
-        title: "Developer Overview & Quick Search",
-        description:
-          "Instant profile retrieval with bio metadata, social connections, and account longevity.",
-        imageUrl: "/project-img/devfinder.webp",
-        alt: "Devfinder Developer Search",
-      },
-      {
-        title: "Deep Profile & Repository Analytics",
-        description:
-          "Interactive repository metrics, language breakdown bars, and commit history exploration.",
-        imageUrl: "/project-img/devfinder-details.jpg",
-        alt: "Devfinder Repository and Analytics View",
-      },
-    ],
-    liveUrl: "https://devfinder-newelle.vercel.app/",
-    githubUrl: "https://github.com/newelle-dev/devfinder",
-    featured: true,
-    overview: [
-      "Devfinder is a streamlined developer exploration tool that allows engineers, recruiters, and open-source enthusiasts to quickly look up GitHub profiles, evaluate technical portfolios, and inspect repositories with minimal friction.",
-      "Native GitHub profile pages often require navigating across several different tabs to inspect bio details, repository star counts, follower networks, and primary coding languages. Devfinder condenses these essential metrics into a cohesive, responsive dashboard.",
-    ],
-    whatIBuilt: [
-      "Instant GitHub profile search with debounced queries, graceful handling of non-existent handles, and rate-limit notifications.",
-      "Rich profile card displaying bio, company affiliation, geographic location, website URLs, and join date timestamps.",
-      "Repository browser with dynamic sorting by stars, forks, and recent activity, linking directly to GitHub source repositories.",
-      "Interactive language distribution visualization showing the developer's top programming languages across public repositories.",
-      "Persistent dark and light theme toggle with system preference detection.",
-      "Micro-animations and fluid layout transitions implemented with Framer Motion.",
-      "Mobile-first responsive architecture ensuring consistent readability on all viewport sizes.",
-    ],
-    engineering: [
-      "Devfinder is constructed with React 19 and Vite 7 to achieve ultra-fast build times and a minimal runtime bundle footprint. Network requests to GitHub's REST API are managed through modular Axios service layers equipped with in-memory caching to reduce redundant round trips.",
-      "The application implements proactive rate limit detection, inspecting GitHub API response headers to warn users when approaching hourly request quotas and providing clear reset timers.",
-      "Component styling uses Tailwind CSS 4, utilizing utility variables to allow instant theme switches without layout shift.",
-    ],
-    outcome:
-      "Devfinder serves as a practical, lightweight utility for reviewing developer portfolios during technical interviews and open-source contributions. It demonstrates clean component boundaries, robust API integration, and thoughtful UI polish.",
-    status:
-      "Live and hosted on Vercel. Future iterations will incorporate GitHub GraphQL API queries for batch fetching and an interactive contribution heatmap visualization.",
-  },
-
-  {
-    slug: "revvup-auto",
-    title: "RevvUp Auto",
-    category: "Automotive Services / Commercial Web",
-    tagline: "High-conversion auto workshop and service booking platform",
-    description:
-      "Professional auto workshop landing site with a conversion-first single-page flow: hero, services, testimonials, and contact/location CTAs. Data-driven business content and component-driven UI for clear customer actions.",
-    techStack: [
-      "Next.js 16",
-      "React 19",
-      "TypeScript",
-      "Tailwind CSS 4",
-      "Motion",
-      "Lucide React",
-      "Vercel",
-    ],
-    imageUrl: "/project-img/revvup-auto.webp",
-    showcaseScreens: [
-      {
-        title: "Conversion-Focused Hero & Service Menu",
-        description:
-          "High-impact visual presentation highlighting workshop credentials, warranties, and emergency callouts.",
-        imageUrl: "/project-img/revvup-auto.webp",
-        alt: "RevvUp Auto Landing Page",
-      },
-      {
-        title: "Online Service Booking Workflow",
-        description:
-          "Step-by-step appointment scheduler with vehicle make/model selectors and upfront estimate calculations.",
-        imageUrl: "/project-img/revvup-booking.jpg",
-        alt: "RevvUp Auto Service Booking Interface",
-      },
-    ],
-    liveUrl: "https://revvup-auto-swart.vercel.app/",
-    githubUrl: "https://github.com/newelle-dev/revvup-auto",
-    featured: true,
-    overview: [
-      "RevvUp Auto is a modern, conversion-engineered digital platform designed for automotive repair centers, diagnostics specialists, and vehicle maintenance workshops. In the automotive repair sector, many local garages rely on dated websites that fail to convert visitors into booked bay appointments.",
-      "RevvUp Auto bridges this gap with an intuitive customer journey that showcases core services, transparent pricing packages, real customer reviews, and a frictionless online booking inquiry flow.",
-    ],
-    whatIBuilt: [
-      "Conversion-optimized single-page layout with sticky booking CTAs, clear value propositions, and service highlights.",
-      "Interactive automotive service catalog covering synthetic oil changes, brake system overhauls, engine diagnostics, and multi-point inspections.",
-      "Digital booking inquiry workflow allowing drivers to select vehicle make, model, desired service, and preferred appointment time.",
-      "Social proof and trust elements including verified customer testimonials, warranty guarantees, and technician certifications.",
-      "Interactive map integration with operating hours, emergency contact triggers, and workshop directions.",
-      "Accessible and mobile-first layout prioritizing fast telephone dials and appointment scheduling on mobile devices.",
-      "Optimized performance achieving 95+ scores on Google Lighthouse for SEO, Accessibility, and Core Web Vitals.",
-    ],
-    engineering: [
-      "Developed using Next.js 16 and Tailwind CSS 4, the application leverages React Server Components to pre-render static business information with zero client-side JavaScript overhead for static sections.",
-      "Client-side interactivity—such as vehicle service selection, animated accordion FAQs, and mobile navigation—is powered by lightweight Motion primitives.",
-      "SEO best practices were rigorously implemented, including JSON-LD LocalBusiness structured schema, OpenGraph social sharing preview metadata, and automated WebP image optimization via Next.js Image.",
-    ],
-    outcome:
-      "The redesign delivered improved engagement and higher appointment conversion rates. It demonstrated how thoughtful UX hierarchy, fast load times, and transparent pricing build immediate customer trust for local service businesses.",
-    status:
-      "Live in production on Vercel. Next features include direct WhatsApp appointment booking hooks, automated customer SMS service reminders, and a digital vehicle maintenance history portal.",
-  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
