@@ -93,66 +93,86 @@ export const projects: Project[] = [
     "Delivered a seamless, sub-second tap-and-go attendance experience that eliminated shift turnaround bottlenecks. The unified administrative suite gave HR teams instantaneous attendance tracking, automated punch pairing, and audit-ready reporting.",
   status:
     "Completed and production-ready with multi-stage Docker containerization for instant deployment on local networks and dedicated kiosk hardware.",
-},
+  },
   {
     slug: "vapetrack-ph",
     title: "VapeTrack PH",
-    category: "Full-Stack SaaS / Retail & Inventory",
-    tagline: "Multi-branch sales and inventory management software",
+    category: "Multi-Tenant SaaS / Cloud POS & Inventory",
+    tagline: "Mobile-first cloud POS and real-time inventory management SaaS for Philippine vape retail",
     description:
-      "Multi-branch sales and inventory management system with real-time stock tracking, dual authentication (4-digit PIN for staff, Email/Password for owners), and analytics dashboard with revenue charts. Fullstack application deployed on Vercel.",
+      "Cloud-based multi-tenant SaaS platform built with Next.js 16 App Router, React 19, Supabase (PostgreSQL with Row Level Security), and Tailwind CSS 4. Empowers vape shop enterprises with sub-30-second POS checkout, multi-branch inventory tracking with variant matrixing (flavors, nicotine strengths), automated profit and COGS analytics, and granular staff PIN authentication.",
     techStack: [
       "Next.js 16",
+      "React 19",
       "TypeScript",
       "Supabase (PostgreSQL)",
-      "Tailwind CSS",
-      "Lucide Icons",
-      "Vercel",
+      "Row Level Security (RLS)",
+      "Tailwind CSS 4",
+      "TanStack Query v5",
+      "Zustand",
+      "Radix UI",
+      "React Hook Form",
+      "Zod",
     ],
-    imageUrl: "/project-img/vapetrack-ph.webp",
+    imageUrl: "/project-img/vapetrack-project/dashboard.png",
     showcaseScreens: [
       {
-        title: "Multi-Branch Management & Analytics",
+        title: "Executive Analytics & Multi-Branch KPI Dashboard",
         description:
-          "Real-time gross revenue metrics, branch performance comparisons, and low-stock alerts.",
-        imageUrl: "/project-img/vapetrack-ph.webp",
-        alt: "VapeTrack PH Analytics Dashboard",
+          "Real-time daily revenue, net profit margin telemetry, orders count, low-stock alerts, and sales performance charts.",
+        imageUrl: "/project-img/vapetrack-project/dashboard.png",
+        alt: "VapeTrack PH Analytics Dashboard Overview",
       },
       {
-        title: "Point-of-Sale (POS) Counter Terminal",
+        title: "Touch-Optimized Cloud POS Terminal",
         description:
-          "Fast-paced checkout interface tailored for cashier staff with instant barcode search and stock deduction.",
-        imageUrl: "/project-img/vapetrack-pos.jpg",
-        alt: "VapeTrack PH POS Terminal",
+          "Sub-30-second checkout interface with product category tabs, flavor/nicotine variant badges, itemized cart, and cash/GCash tender.",
+        imageUrl: "/project-img/vapetrack-project/pos.png",
+        alt: "VapeTrack PH Point of Sale Interface",
+      },
+      {
+        title: "Multi-Branch Inventory & Variant Matrix",
+        description:
+          "Centralized stock ledger tracking SKUs across Manila, QC, and Makati outlets with COGS, retail pricing, and low-stock reorder thresholds.",
+        imageUrl: "/project-img/vapetrack-project/inventory.png",
+        alt: "Multi-Branch Inventory and Variant Matrix",
+      },
+      {
+        title: "Dual-Mode Authentication & Fast Terminal PIN Access",
+        description:
+          "4-digit numeric keypad for rapid cashier terminal switching alongside role-guarded email/password access for shop owners.",
+        imageUrl: "/project-img/vapetrack-project/staff_pin.png",
+        alt: "Fast Staff PIN Access and Owner Portal Login",
       },
     ],
     liveUrl: "https://vapetrack-ph.vercel.app/",
     githubUrl: "https://github.com/newelle-dev/vapetrack-ph",
     featured: true,
     overview: [
-      "VapeTrack PH is a dedicated multi-branch point-of-sale and inventory control software platform developed for retail chains in the specialty vape and e-liquid industry. Managing multiple physical retail branches typically leads to stock shrinkage, fragmented paper logs, and discrepancies during stock transfers between branches.",
-      "The system unifies all retail operations into a centralized, cloud-connected platform. Business owners gain live visibility into multi-store revenue and inventory levels, while on-the-floor staff benefit from an agile, touch-friendly POS terminal optimized for rapid transactions.",
+      "VapeTrack PH is a cloud-native Sales & Inventory Management SaaS designed to eliminate manual logbooks and spreadsheet chaos in Philippine vape retail shops. Most independent vape businesses operate across multiple physical outlets while struggling with inventory inaccuracy, untracked cost of goods sold (COGS), and lack of staff accountability.",
+      "Engineered with Next.js 16 and Supabase (PostgreSQL), VapeTrack PH provides a mobile-responsive Progressive Web App (PWA) operating seamlessly over 4G/5G connections with zero hardware dependencies. Shop owners can monitor real-time gross revenue and net profit across branches, while cashiers process transactions in under 30 seconds via a touch-optimized POS terminal.",
     ],
     whatIBuilt: [
-      "Dual-tier authentication: rapid 4-digit PIN verification for cashier shifts and secure email/password credentialing with multi-branch permissions for owners.",
-      "Multi-branch inventory ledger with automated batch adjustments, low-stock threshold triggers, and branch-to-branch transfer reconciliations.",
-      "High-speed POS checkout flow supporting cash, e-wallets (GCash, Maya), credit cards, itemized discounts, and instant receipt generation.",
-      "Comprehensive analytics suite with interactive revenue graphs, profit margin analysis, and fast-moving SKU breakdowns.",
-      "Immutable audit log recording every inventory modification, price change, and voided transaction for loss prevention.",
-      "Granular role-based authorization restricting cashiers from accessing margin data, financial reports, or historical audit logs.",
-      "Responsive UI optimized for desktop cash registers, tablets, and mobile devices.",
+      "High-speed Point of Sale (POS) interface equipped with category filters (E-Liquids, Pod Systems, Disposables, Coils), real-time product search, and variant selectors for nicotine strengths and flavor profiles.",
+      "Slide-over cart checkout drawer (Zustand client state) supporting itemized quantity adjustments, discount inputs, 12% Philippine VAT calculation, and quick tender via Cash or GCash.",
+      "Multi-branch inventory workspace tracking on-hand quantities across physical locations (e.g., Manila Main, QC, Makati) with automated low-stock reorder warnings.",
+      "Comprehensive product variant matrix system allowing one parent item to manage multi-dimensional attributes including bottle sizes (30ml, 60ml, 100ml) and nicotine ratings (3mg, 25mg, 50mg).",
+      "Dual-mode authentication flow implementing 4-digit PIN access for rapid staff shift transitions and standard email/password credentials with Supabase Auth for store owners.",
+      "Real-time analytics dashboard presenting daily revenue, net profit margin percentages, best-selling product leaderboards, and live chronological sales logs.",
+      "End-to-end multi-tenant isolation utilizing PostgreSQL Row Level Security (RLS) policies conditioned on organization_id to ensure complete data security across tenants.",
     ],
     engineering: [
-      "Built with Next.js 16 and TypeScript, VapeTrack PH relies on Supabase (PostgreSQL) as its primary data store. Strict Row Level Security (RLS) rules and PostgreSQL stored procedures enforce strict data isolation between retail organizations and restrict permissions based on the active user role.",
-      "To prevent race conditions during concurrent POS sales across branches, checkout transactions are executed through atomic PostgreSQL RPC functions. These functions verify product availability and update inventory counts in a single atomic database operation.",
-      "The frontend maximizes performance by using Next.js Server Components for intensive dashboard aggregation, while leveraging optimistic client updates on POS line items for seamless, zero-latency scanning at checkout counters.",
+      "Engineered a multi-tenant PostgreSQL data architecture in Supabase leveraging Row Level Security (RLS) policies scoped to organization_id, guaranteeing tenant data isolation without repetitive manual query filtering.",
+      "Implemented atomic Postgres RPC stored procedures (e.g., process_sale) to execute inventory decrementing and sales ledger journaling in a single atomic database transaction, preventing race conditions during simultaneous branch checkouts.",
+      "Optimized data synchronization using TanStack Query v5 with optimistic UI updates and localized Zustand cart state, delivering instant client responsiveness even over high-latency cellular connections.",
+      "Structured application routes around Next.js 16 App Router using route groups ((auth), (dashboard)) with server-side auth session validation and cookie-based role checks.",
+      "Enforced type safety from database schemas to client forms using auto-generated Supabase TypeScript definitions paired with Zod runtime validation and React Hook Form.",
     ],
     outcome:
-      "VapeTrack PH eliminated manual paper inventories and reconciliation overhead across branches. It gave store owners peace of mind with real-time auditability and enabled cashier staff to process customer transactions in seconds.",
+      "Empowered vape shop owners with real-time multi-branch inventory visibility, accurate profit margin tracking per transaction, and a fast, reliable POS terminal requiring zero upfront hardware investment.",
     status:
-      "Live in production and actively maintained. Next enhancements include barcode scanner SDK integration, Bluetooth ESC/POS thermal receipt printing, and automated supplier reorder notifications.",
+      "Active SaaS in production with continuous deployment on Vercel, integrated with Supabase managed PostgreSQL and automated database migrations.",
   },
-
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
